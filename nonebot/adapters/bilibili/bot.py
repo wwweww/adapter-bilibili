@@ -21,9 +21,10 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def send(
-        self,
-        event: Event,
-        message: Union[str, Message, MessageSegment],
-        **kwargs,
+            self,
+            event: Event,
+            message: Union[str, Message, MessageSegment],
+            **kwargs,
     ) -> Any:
+        # self.adapter.bili.send()
         ...

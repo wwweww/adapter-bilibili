@@ -11,10 +11,10 @@ import json
 import zlib
 
 import pickle
-from typing import Tuple, Any
 
 from qrcode_terminal import draw
 from nonebot.utils import logger_wrapper
+import qrcode
 
 log = logger_wrapper("BilibiliLive")
 
@@ -33,7 +33,7 @@ def rawData_to_jsonData(data: bytes):
     ver = int(data[6:8].hex(), 16)
     op = int(data[8:12].hex(), 16)
 
-    if len(data) > packetLen: # 防止
+    if len(data) > packetLen:  # 防止
         rawData_to_jsonData(data[packetLen:])
         data = data[:packetLen]
 
@@ -55,7 +55,10 @@ def printUrlQRcode(url: str):
     :param url: 链接
     :return:
     """
-    draw(url)
+    # draw(url)
+    qr = qrcode.QRCode()
+    qr.add_data(url)
+    qr.print_ascii(invert=True)
 
 
 def saveCookies(cookies):

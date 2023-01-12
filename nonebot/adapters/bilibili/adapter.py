@@ -33,6 +33,7 @@ from .config import Config
 from .message import Message, MessageSegment
 
 from .utils import rawData_to_jsonData, roomId_to_rawData, log
+from .bili_interaction import login as login_bilibili
 
 
 class Adapter(BaseAdapter):
@@ -45,6 +46,11 @@ class Adapter(BaseAdapter):
     @overrides(BaseAdapter)
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
+        # self.bili = login_bilibili()
+        # log(
+        #     "INFO",
+        #     f"ID: {self.bili.cookies.get('DedeUserID')} login successful"
+        # )
         self.bilibili_config: Config = Config(**self.config.dict())
         self.connections: Dict[str, WebSocket] = {}
         self.tasks: List['asyncio.Task'] = []
@@ -71,6 +77,12 @@ class Adapter(BaseAdapter):
         request = Request(
             "GET",
             URL("wss://broadcastlv.chat.bilibili.com/sub"),
+            headers={
+                "Origin": "https://live.bilibili.com",
+                "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
+                "Sec-WebSocket-Version": "13",
+                "Upgrade": "websocket"
+            },
             timeout=30.0
         )
         while True:
@@ -78,7 +90,7 @@ class Adapter(BaseAdapter):
                 async with self.websocket(request) as ws:
                     await ws.send(bytes.fromhex(roomId_to_rawData(room_id)))  # 进房
                     log("DEBUG",
-                        f"Websocket Connection to {room_id} established"
+                        f"Successfully joined room {room_id}"
                         )
                     await asyncio.gather(asyncio.create_task(self.sendHB(ws)),  # 心跳包
                                          asyncio.create_task(self.ws_event(ws, room_id))  # 事件处理
@@ -99,6 +111,12 @@ class Adapter(BaseAdapter):
                 "DEBUG",
                 json_data
             )
+            if ws.closed:
+                log(
+                    "WARNING",
+                    "Websocket is disconnected, try to reconnect."
+                )
+                await self.ws_event(ws, room_id)
 
     async def sendHB(self, ws):
         hb = "00000010001000010000000200000001"
