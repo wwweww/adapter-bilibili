@@ -1,1 +1,2 @@
 # adapter-bilibili
+适配哔哩哔哩直播间websocket协议的nonebot2适配器
