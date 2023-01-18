@@ -11,6 +11,7 @@ from typing import (
     AsyncGenerator,
 )
 
+from nonebot.message import handle_event
 from nonebot.typing import overrides
 from nonebot.exception import WebSocketClosed
 from nonebot.utils import DataclassEncoder, escape_tag
@@ -76,17 +77,15 @@ class Adapter(BaseAdapter):
         await asyncio.gather(*self.tasks, return_exceptions=True)
 
     async def _client(self, room_id):
-        uri = URL("wss://broadcastlv.chat.bilibili.com/sub")
-        headers = {
+        request = Request(
+            "GET",
+            URL("wss://broadcastlv.chat.bilibili.com/sub"),
+            headers={
                 "Origin": "https://live.bilibili.com",
                 "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
                 "Sec-WebSocket-Version": "13",
                 "Upgrade": "websocket",
-            }
-        request = Request(
-            "GET",
-            uri,
-            headers=headers,
+            },
             timeout=30
         )
         while True:
@@ -113,14 +112,30 @@ class Adapter(BaseAdapter):
                         json_data = rawData_to_jsonData(data)
                         log(
                             "DEBUG",
+                            json_data
+                        )
+                        if json_data is None:
+                            continue
+                        else:
+                            await handle_event(bot, Event.new(
+                                json_data
+                            ))
+                        log(
+                            "DEBUG",
                             f"[{room_id}] data: {json_data}",
                         )
             except Exception as e:
+                self.bot_disconnect(bot)
+                self.tasks.remove(t)
                 log(
                     "ERROR",
                     f"Error connecting websocket, ERROR: {e}"
                 )
             await asyncio.sleep(3)
+
+    # async def construction_event(self, json_data: Dict):
+    #     type = json_data.get("cmd")
+    #     type = type.capitalize()
 
     async def sendHB(self, ws, room_id):
         hb = "0000001f0010000100000002000000015b6f626a656374204f626a6563745d"

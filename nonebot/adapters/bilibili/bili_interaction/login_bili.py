@@ -26,7 +26,7 @@ class Login:
     def getQRcode(self):
         """
         在终端打印登录二维码
-        :return:
+        :return: 用于登录验证的 二维码令牌
         """
         getLoginQRApi = "https://passport.bilibili.com/x/passport-login/web/qrcode/generate?source=main-fe-header"
         qrData = self.client.get(getLoginQRApi).json()
