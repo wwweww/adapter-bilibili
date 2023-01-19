@@ -117,8 +117,12 @@ class Adapter(BaseAdapter):
                         if json_data is None:
                             continue
                         else:
-                            await handle_event(bot, Event.new(
-                                json_data
+                            event_class = Event.new(json_data)
+                            if event_class is None:
+                                continue
+                            asyncio.create_task(handle_event(
+                                bot,
+                                event_class
                             ))
                         log(
                             "DEBUG",

@@ -1,9 +1,10 @@
 import dataclasses
 from abc import ABC
-from typing import Dict, Any
+from copy import deepcopy
+from typing import Dict, Any, List
 
 from nonebot.typing import overrides
-from pydantic import BaseModel
+from pydantic import BaseModel, root_validator
 from nonebot.adapters import Event as BaseEvent
 
 from .message import Message
@@ -25,7 +26,10 @@ class Event(BaseEvent):
             if event.__name__ == event_type.capitalize():
                 event_class = event
                 break
-        return event_class.parse_obj(json_data)
+        if event_class is None:
+            return
+        e = event_class.parse_obj(json_data)
+        return e
 
     def get_type(self) -> str:
         return self.cmd
@@ -56,30 +60,43 @@ class Combo_send(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Combo_send'
 
 class Common_notice_danmaku(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Common_notice_danmaku'
 
 
 class Danmu_msg(Event):
-    info: Dict[Any, Any]
+    info: List[Any]
+    massage: Message
+
+    @root_validator(pre=True, allow_reuse=True)
+    def check_message(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        values["massage"] = deepcopy(values['info'][1])
+        return values
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
-        return 'Danmu_msg'
+    def get_type(self):  # noqa
+        return 'message'
 
+    @overrides(Event)
+    def get_message(self):  # noqa
+        return self.massage
+
+    @overrides(Event)
+    def get_user_id(self) -> str:
+        return self.info[2][0]
 
 class Entry_effect(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Entry_effect'
 
 
@@ -87,7 +104,7 @@ class Guard_buy(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Guard_buy'
 
 
@@ -95,7 +112,7 @@ class Interact_word(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Interact_word'
 
 
@@ -103,7 +120,7 @@ class Like_info_v3_click(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Like_info_v3_click'
 
 
@@ -111,7 +128,7 @@ class Like_info_v3_update(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Like_info_v3_update'
 
 
@@ -119,7 +136,7 @@ class Notice_msg(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Notice_msg'
 
 
@@ -127,7 +144,7 @@ class Online_rank_count(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Online_rank_count'
 
 
@@ -135,7 +152,7 @@ class Online_rank_v2(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Online_rank_v2'
 
 
@@ -143,7 +160,7 @@ class Popular_rank_changed(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Popular_rank_changed'
 
 
@@ -151,13 +168,13 @@ class Room_change(Event):
     data: Dict[Any, Any]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message"]:  # noqa
+    def get_type(self):  # noqa
         return 'Room_change'
 
 
-class Interact_word(Event):
-    data: Dict[Any, Any]
-
-
-class Interact_word(Event):
-    data: Dict[Any, Any]
+# class Interact_word(Event):
+#     data: Dict[Any, Any]
+#
+#
+# class Interact_word(Event):
+#     data: Dict[Any, Any]

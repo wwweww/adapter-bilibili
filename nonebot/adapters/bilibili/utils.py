@@ -58,7 +58,12 @@ def printUrlQRcode(url: str):
     # draw(url)
     qr = qrcode.QRCode()
     qr.add_data(url)
-    qr.print_ascii(invert=True)
+
+    img = qr.make_image()
+    with open('test.png', 'wb') as f:
+        img.save(f)
+    # qr.save
+    # qr.print_ascii(invert=True)
 
 
 def saveCookies(cookies):

@@ -1,3 +1,4 @@
+import asyncio
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -26,5 +27,5 @@ class Bot(BaseBot):
             message: Union[str, Message, MessageSegment],
             **kwargs,
     ) -> Any:
-        # self.adapter.bili.send()
+        asyncio.create_task(self.adapter.bili.send(message))
         ...
