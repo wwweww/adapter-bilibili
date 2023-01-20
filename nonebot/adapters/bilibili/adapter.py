@@ -1,41 +1,26 @@
 import asyncio
-
 from typing import (
-    TYPE_CHECKING,
     Any,
     Dict,
     List,
-    Union,
-    Callable,
-    Optional,
-    AsyncGenerator,
 )
 
-from nonebot.message import handle_event
-from nonebot.typing import overrides
-from nonebot.exception import WebSocketClosed
-from nonebot.utils import DataclassEncoder, escape_tag
+from nonebot.adapters import Adapter as BaseAdapter
 from nonebot.drivers import (
     URL,
     Driver,
     Request,
-    Response,
     WebSocket,
     ForwardDriver,
-    ReverseDriver,
-    HTTPServerSetup,
-    WebSocketServerSetup,
 )
+from nonebot.message import handle_event
+from nonebot.typing import overrides
 
-from nonebot.adapters import Adapter as BaseAdapter
-
-from .bot import Bot
-from .event import Event
-from .config import Config
-from .message import Message, MessageSegment
-
-from .utils import rawData_to_jsonData, roomId_to_rawData, log
 from .bili_interaction import login as login_bilibili
+from .bot import Bot
+from .config import Config
+from .event import Event
+from .utils import rawData_to_jsonData, roomId_to_rawData, log
 
 
 class Adapter(BaseAdapter):
@@ -112,7 +97,7 @@ class Adapter(BaseAdapter):
                         json_data = rawData_to_jsonData(data)
                         log(
                             "DEBUG",
-                            json_data
+                            f"[{room_id}] data: {json_data}",
                         )
                         if json_data is None:
                             continue
@@ -124,10 +109,6 @@ class Adapter(BaseAdapter):
                                 bot,
                                 event_class
                             ))
-                        log(
-                            "DEBUG",
-                            f"[{room_id}] data: {json_data}",
-                        )
             except Exception as e:
                 self.bot_disconnect(bot)
                 self.tasks.remove(t)
@@ -136,10 +117,6 @@ class Adapter(BaseAdapter):
                     f"Error connecting websocket, ERROR: {e}"
                 )
             await asyncio.sleep(3)
-
-    # async def construction_event(self, json_data: Dict):
-    #     type = json_data.get("cmd")
-    #     type = type.capitalize()
 
     async def sendHB(self, ws, room_id):
         hb = "0000001f0010000100000002000000015b6f626a656374204f626a6563745d"
