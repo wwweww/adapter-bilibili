@@ -1,5 +1,5 @@
 from copy import deepcopy
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Type, Literal
 
 from nonebot.adapters import Event as BaseEvent
 from nonebot.typing import overrides
@@ -17,8 +17,12 @@ class Event(BaseEvent):
 
     @classmethod
     def new(cls, json_data: Dict):
+        def all_subclasses(cls: Type[Event]):
+            return set(cls.__subclasses__()).union(
+                [s for c in cls.__subclasses__() for s in all_subclasses(c)])
+
         event_type = json_data["cmd"]
-        all_event = cls.__subclasses__()
+        all_event = all_subclasses(cls)
         event_class = None
         for event in all_event:
             if event.__name__ == event_type.capitalize():
@@ -59,11 +63,11 @@ class MessageEvent(Event):
     massage: Message
 
     @overrides(Event)
-    def get_type(self):  # noqa
+    def get_type(self):
         return 'message'
 
     @overrides(Event)
-    def get_message(self):  # noqa
+    def get_message(self):
         return self.massage
 
 
@@ -99,8 +103,9 @@ class Super_chat_message(MessageEvent):
 
 # 通知事件 -- 入房、开通舰长、礼物
 class NoticeEvent(Event):
+
     @overrides(Event)
-    def get_type(self):  # noqa
+    def get_type(self) -> Literal["notice"]:
         return 'notice'
 
 

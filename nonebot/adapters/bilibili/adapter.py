@@ -95,10 +95,6 @@ class Adapter(BaseAdapter):
                             continue
                         data = await ws.receive_bytes()
                         json_data = rawData_to_jsonData(data)
-                        log(
-                            "DEBUG",
-                            f"[{room_id}] data: {json_data}",
-                        )
                         if json_data is None:
                             continue
                         else:
