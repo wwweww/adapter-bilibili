@@ -3,7 +3,7 @@
 # 已实现事件
 <details>
   <summary>消息类</summary>
-  `Danmu_msg`弹幕
+  `tinper`弹幕
   `Super_chat_message`醒目留言
 </details>
 <details>
