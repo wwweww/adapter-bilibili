@@ -1,5 +1,10 @@
 ![assets\adapter-bilibili.png](https://socialify.git.ci/wwweww/adapter-bilibili/image?description=1&descriptionEditable=%E9%80%82%E9%85%8D%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E7%9B%B4%E6%92%AD%E9%97%B4websocket%E5%8D%8F%E8%AE%AE%E7%9A%84nonebot2%E9%80%82%E9%85%8D%E5%99%A8&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fgithub.com%2Fwwweww%2Fadapter-bilibili%2Fblob%2Fmain%2Fassets%2Fa.png%3Fraw%3Dtrue&name=1&pattern=Charlie%20Brown&stargazers=1&theme=Light)
-
+# 配置
+```
+DRIVER=~websockets           # 必须有的正向ws的Driver
+ROOM_ID_LIST=[123, 123, 123] # 直播间房间号
+login=true                   # 是否需要登录 (登录以后才可以用send方法向直播间发送消息)
+```
 # 已实现事件
 <details>
   <summary>消息类</summary>
@@ -29,6 +34,11 @@
 `Room_real_time_message_update`房间数据<br>
 </details>
 
+# 已实现api
+`send` 发送弹幕
 
 # 鸣谢
+- [ieew](https://github.com/ieew)： 提供代码上的帮助
+- [17TheWord](https://github.com/17TheWord)： 教我使用github
+- [NoneBot2](https://github.com/nonebot/nonebot2)： 开源代码 让我拥有这次学习机会
 
