@@ -1,6 +1,6 @@
-![adapter-bilibili](assets\adapter-bilibili.png)
+![assets\adapter-bilibili.png](https://github.com/wwweww/adapter-bilibili/blob/main/assets/adapter-bilibili.png)
 
-# <center>adapter-bilibili</center>
+# <p align="center">adapter-bilibili</p>
 
 适配哔哩哔哩直播间websocket协议的nonebot2适配器
 
