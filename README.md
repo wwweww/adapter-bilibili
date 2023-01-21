@@ -1,4 +1,4 @@
-![assets\adapter-bilibili.png]([https://socialify.git.ci/wwweww/adapter-bilibili/image?description=1&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fgithub.com%2Fwwweww%2Fadapter-bilibili%2Fblob%2Fmain%2Fassets%2Fa.png%3Fraw%3Dtrue&name=1&owner=1&pattern=Solid&pulls=1&theme=Light](https://socialify.git.ci/wwweww/adapter-bilibili/image?description=1&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fgithub.com%2Fwwweww%2Fadapter-bilibili%2Fblob%2Fmain%2Fassets%2Fa.png%3Fraw%3Dtrue&name=1&pattern=Signal&pulls=1&theme=Light))
+![assets\adapter-bilibili.png](https://socialify.git.ci/wwweww/adapter-bilibili/image?description=1&font=Inter&forks=1&issues=1&logo=https%3A%2F%2Fgithub.com%2Fwwweww%2Fadapter-bilibili%2Fblob%2Fmain%2Fassets%2Fa.png%3Fraw%3Dtrue&name=1&pattern=Signal&pulls=1&theme=Light)
 
 # <p align="center">adapter-bilibili</p>
 
