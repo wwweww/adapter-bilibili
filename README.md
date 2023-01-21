@@ -1,4 +1,4 @@
-![adapter-bilibili](D:\bc\ab\adapter-bilibili\assets\adapter-bilibili.png)
+![adapter-bilibili](assets\adapter-bilibili.png)
 
 # <center>adapter-bilibili</center>
 
