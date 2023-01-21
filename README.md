@@ -1,4 +1,4 @@
-![adapter-bilibili](assets\adapter-bilibili.png)
+!https://github.com/wwweww/adapter-bilibili/blob/main/assets/adapter-bilibili.png
 
 # <center>adapter-bilibili</center>
 
