@@ -1,0 +1,24 @@
+[tool.pdm]
+
+[project]
+name = "nonebot-adapter-bilibili"
+version = "0.0.1"
+description = "适配哔哩哔哩直播间ws协议的Nonebo2适配器"
+authors = [
+    {name = "wwweww", email = "2646787260@qq.com"},
+]
+dependencies = ["nonebot2>=2.0.0rc2"]
+requires-python = ">=3.8"
+readme = "README.md"
+license = {text = "MIT"}
+
+[project.urls]
+repository = "https://github.com/wwweww/adapter-bilibili"
+
+[tool.pdm.build]
+includes = ["nonebot"]
+
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"
+
