@@ -3,29 +3,30 @@
 # 已实现事件
 <details>
   <summary>消息类</summary>
-  * `tinper`弹幕
-  * `Super_chat_message`醒目留言
+
+`Danmu_msg`弹幕<br>
+`Super_chat_message`醒目留言
 </details>
+
 <details>
   <summary>通知类</summary>
-  `Combo_send`连击礼物
-  `Send_gift`投喂礼物
-  `Common_notice_danmaku`限时任务
-  `Entry_effect`舰长进房
-  `Interact_word`普通进房消息
-  `Guard_buy`上舰
-  `User_toast_msg`续费舰长
-  `Notice_msg`在本房间续费了舰长
-  `Like_info_v3_click`点赞
-  `Like_info_v3_update`总点赞数
-  `Online_rank_count`在线等级统计
-  `Room_change`房间信息变动
-  `Room_real_time_message_update`房间数据
-  `Watched_change`直播间实时观看人数
-  `Stop_live_room_list`实时下播列表
-  `Room_real_time_message_update`房间数据
-  `Room_real_time_message_update`房间数据
-  
+
+`Combo_send`连击礼物<br>
+`Send_gift`投喂礼物<br>
+`Common_notice_danmaku`限时任务<br>
+`Entry_effect`舰长进房<br>
+`Interact_word`普通进房消息<br>
+`Guard_buy`上舰<br>
+`User_toast_msg`续费舰长<br>
+`Notice_msg`在本房间续费了舰长<br>
+`Like_info_v3_click`点赞<br>
+`Like_info_v3_update`总点赞数<br>
+`Online_rank_count`在线等级统计<br>
+`Room_change`房间信息变动<br>
+`Room_real_time_message_update`房间数据<br>
+`Watched_change`直播间实时观看人数<br>
+`Stop_live_room_list`实时下播列表<br>
+`Room_real_time_message_update`房间数据<br>
 </details>
 
 
