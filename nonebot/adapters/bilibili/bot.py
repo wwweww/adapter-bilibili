@@ -20,5 +20,4 @@ class Bot(BaseBot):
             message: Union[str, Message, MessageSegment],
             **kwargs,
     ) -> Any:
-        asyncio.create_task(self.adapter.bili.send(message))
-        ...
+        asyncio.create_task(self.adapter.bili.send(message, self.self_id))

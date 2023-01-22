@@ -23,7 +23,7 @@ class BilibiliDriver(Login):
         self.completionCookie(self.jcr)
         self.cookies = self.client.cookies
 
-    async def send(self, msg):
+    async def send(self, msg, room_id):
         sendApi = "https://api.live.bilibili.com/msg/send"
         async with httpx.AsyncClient(cookies=self.cookies, headers=self.client.headers) as aclient:
             data = {'bubble': '0',
@@ -32,7 +32,7 @@ class BilibiliDriver(Login):
                     'mode': '1',
                     'fontsize': '25',
                     'rnd': '1673365377',
-                    'roomid': '1331407',
+                    'roomid': str(room_id),
                     'csrf': self.jcr,
                     'csrf_token': self.jcr,
                     }
