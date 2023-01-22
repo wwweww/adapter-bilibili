@@ -60,7 +60,8 @@ class Event(BaseEvent):
 
 # 消息事件 -- 弹幕、醒目留言
 class MessageEvent(Event):
-    massage: Message
+    message: Message
+    session_id: str
 
     @overrides(Event)
     def get_type(self):
@@ -68,7 +69,11 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_message(self):
-        return self.massage
+        return self.message
+
+    @overrides(Event)
+    def get_session_id(self) -> str:
+        return f'group_{self.session_id}'
 
 
 class Danmu_msg(MessageEvent):
@@ -77,7 +82,8 @@ class Danmu_msg(MessageEvent):
 
     @root_validator(pre=True, allow_reuse=True)
     def check_message(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        values["massage"] = deepcopy(values['info'][1])
+        values["session_id"] = deepcopy(values["info"][9]["ct"])
+        values["message"] = deepcopy(values['info'][1])
         return values
 
     @overrides(Event)
@@ -92,6 +98,7 @@ class Super_chat_message(MessageEvent):
 
     @root_validator(pre=True, allow_reuse=True)
     def check_message(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+        values["session_id"] = deepcopy(values["data"]["token"])
         values["massage"] = deepcopy(values["data"]["message"])
         values["duration"] = deepcopy(values["data"]["time"])
         return values
