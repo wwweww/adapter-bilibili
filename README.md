@@ -42,3 +42,5 @@ login=true                   # 是否需要登录 (登录以后才可以用send�
 - [17TheWord](https://github.com/17TheWord)： 教我使用github
 - [NoneBot2](https://github.com/nonebot/nonebot2)： 开源代码 让我拥有这次学习机会
 
+# 顺便一提
+初出茅庐, 有啥好的意见or代码有啥bug欢迎提交
