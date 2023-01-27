@@ -90,6 +90,9 @@ class Danmu_msg(MessageEvent):
     def get_user_id(self) -> str:
         return str(self.info[2][0])
 
+    def get_user_name(self) -> str:
+        return self.info[2][1]
+
 
 class Super_chat_message(MessageEvent):
     """ 醒目留言 """
@@ -223,3 +226,25 @@ class Stop_live_room_list(NoticeEvent):
     def check_message(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         values["room_id_list"] = deepcopy(values["data"]["room_id_list"])
         return values
+
+
+class Anchor_lot_start(NoticeEvent):
+    """ 天选之人开始 """
+    data: Dict[Any, Any]
+
+    def get_anchor_lot_info(self):
+        """ 获取天选之人的相关信息 """
+        return {
+            "award_name": self.data["award_name"],
+            "danmu": self.data["danmu"],
+            "gift_name": self.data["gift_name"]
+        }
+
+
+class Anchor_lot_award(NoticeEvent):
+    """ 天选之人结果 """
+    data: Dict[Any, Any]
+
+    def winner_info(self):
+        """ 获取中奖人信息 """
+        return self.data["award_users"]

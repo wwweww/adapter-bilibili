@@ -2,7 +2,7 @@
 
 [project]
 name = "nonebot-adapter-bilibili"
-version = "0.0.4"
+version = "0.0.5"
 description = "适配哔哩哔哩直播间ws协议的Nonebo2适配器"
 authors = [
     {name = "wwweww", email = "2646787260@qq.com"},
