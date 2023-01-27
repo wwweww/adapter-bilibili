@@ -32,6 +32,9 @@ login=true                   # 是否需要登录 (登录以后才可以用send�
 `Watched_change`直播间实时观看人数<br>
 `Stop_live_room_list`实时下播列表<br>
 `Room_real_time_message_update`房间数据<br>
+`Anchor_lot_start`天选之人开始<br>
+`Anchor_lot_award`天选之人结果<br>
+
 </details>
 
 # 已实现api
