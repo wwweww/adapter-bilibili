@@ -87,3 +87,17 @@ def loadCookie():
         return
     with open("./config/config.pickle", "rb") as cookieFile:
         return pickle.load(cookieFile)
+
+def checkCookie() -> bool:
+    """
+    检查cookie
+    :return: cookie对象
+    """
+    if "./config/config.pickle" not in os.listdir():
+        return False
+    else:
+        return True
+
+def convert_cookies_to_dict(cookies):
+    cookies = dict([l.split("=", 1) for l in cookies.split("; ")])
+    return cookies
