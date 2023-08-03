@@ -9,13 +9,11 @@
 import httpx
 from .login_bili import Login
 
-
 class BilibiliDriver(Login):
     def __init__(self):
         super().__init__()
         self.cookies = None
         self.jcr = None
-        self.login()
 
     def login(self):
         qrcodeKey = self.getQRcode()

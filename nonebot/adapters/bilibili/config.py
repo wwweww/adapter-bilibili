@@ -4,9 +4,9 @@ from pydantic import Field, Extra, BaseModel
 
 
 class Config(BaseModel):
-    room_id_list: List[str]
-    login: bool
-
+    room_id_list: List[str] = []
+    login: bool = False
+    cookies: str = ""
     class Config:
         extra = Extra.ignore
         allow_population_by_field_name = True

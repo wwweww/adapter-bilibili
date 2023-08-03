@@ -2,8 +2,9 @@
 # 配置
 ```
 DRIVER=~websockets           # 必须有的正向ws的Driver
-ROOM_ID_LIST=[123, 123, 123] # 直播间房间号
-login=true                   # 是否需要登录 (登录以后才可以用send方法向直播间发送消息)
+ROOM_ID_LIST=[123, 123, 123] # 直播间房间号 
+login=true                   # 是否需要登录 (登录以后才可以用send方法向直播间发送消息) 默认false
+cookies="buvid***"           # 登录用的cookies (登录以后才可以用send方法向直播间发送消息) 默认"",没有配置将使用二维码登录
 ```
 # 已实现事件
 <details>
