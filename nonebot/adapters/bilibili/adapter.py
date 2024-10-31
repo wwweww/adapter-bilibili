@@ -20,7 +20,11 @@ from .bili_interaction import login as login_bilibili
 from .bot import Bot
 from .config import Config
 from .event import Event
-from .utils import rawData_to_jsonData, roomId_to_rawData, log
+from .utils import rawData_to_jsonData, roomId_to_rawData, log,convert_cookies_to_dict
+
+import httpx
+import nonebot
+
 
 
 class Adapter(BaseAdapter):
@@ -36,14 +40,23 @@ class Adapter(BaseAdapter):
         self.bilibili_config: Config = Config(**self.config.dict())
         if self.bilibili_config.login:
             self.bili = login_bilibili()
-            log(
-                "INFO",
-                f"ID: {self.bili.cookies.get('DedeUserID')} login successful"
-            )
+            if not self.bilibili_config.cookies == "" :
+                cookies:dict=convert_cookies_to_dict(self.bilibili_config.cookies)
+                self.bili.cookies=httpx.Cookies()
+                self.bili.cookies.clear()
+                for k,v in cookies.items():
+                    self.bili.cookies.set(name=k,value=v)
+                self.bili.jcr=cookies.get("bili_jct")
+                log("INFO",f"ID: {self.bili.cookies.get('DedeUserID')} login successful")
+            else: 
+                log("WARNING","cookie没有配置，将采用二维码登录")
+                self.bili.login()
+                log("INFO",f"ID: {self.bili.cookies.get('DedeUserID')} login successful")
+                
+            
         self.connections: Dict[str, WebSocket] = {}
         self.tasks: List['asyncio.Task'] = []
         self._setup()
-
     def _setup(self) -> None:
         if isinstance(self.driver, ForwardDriver):
             self.driver.on_startup(self.start_ws_client)
@@ -70,6 +83,7 @@ class Adapter(BaseAdapter):
                 "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
                 "Sec-WebSocket-Version": "13",
                 "Upgrade": "websocket",
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.188"
             },
             timeout=30
         )
