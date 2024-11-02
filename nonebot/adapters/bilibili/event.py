@@ -1,19 +1,16 @@
 from copy import deepcopy
+from typing_extensions import override
 from typing import Dict, Any, List, Type, Literal
 
+
+from pydantic import model_validator
 from nonebot.adapters import Event as BaseEvent
-from nonebot.typing import overrides
-from pydantic import root_validator
+from nonebot.compat import model_dump
 
 from .message import Message
 
 
 class Event(BaseEvent):
-    """
-    使用bilibili websocket不同的消息类型(cmd)作为事件类型
-    -哔哩哔哩直播弹幕 Websocket 协议参考: https://github.com/lovelyyoshino/Bilibili-Live-API/blob/master/API.WebSocket.md-
-    """
-    cmd: str
 
     @classmethod
     def new(cls, json_data: Dict):
@@ -30,33 +27,40 @@ class Event(BaseEvent):
                 break
         if event_class is None:
             return
-        e = event_class.parse_obj(json_data)
+        e = event_class.model_validate(json_data)
         return e
 
+    @override
     def get_type(self) -> str:
         raise NotImplementedError
 
+    @override
     def get_event_name(self) -> str:
-        return self.cmd
+        raise NotImplementedError
 
+    @override
     def get_event_description(self) -> str:
-        return str(self.dict())
+        return str(model_dump(self))
 
+    @override
     def get_message(self) -> Message:
         raise NotImplementedError
 
+    @override
     def get_plaintext(self) -> str:
         raise NotImplementedError
 
+    @override
     def get_user_id(self) -> str:
         raise NotImplementedError
 
+    @override
     def get_session_id(self) -> str:
         raise NotImplementedError
 
+    @override
     def is_tome(self) -> bool:
         return False
-
 
 # 消息事件 -- 弹幕、醒目留言
 class MessageEvent(Event):
@@ -99,7 +103,7 @@ class Super_chat_message(MessageEvent):
     data: Dict[str, Any]
     duration: int
 
-    @root_validator(pre=True, allow_reuse=True)
+    @model_validator(pre=True, allow_reuse=True)
     def check_message(cls, values: Dict[str, Any]) -> Dict[str, Any]:
         values["session_id"] = deepcopy(values["data"]["token"])
         values["massage"] = deepcopy(values["data"]["message"])

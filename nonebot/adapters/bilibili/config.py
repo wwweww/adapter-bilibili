@@ -1,12 +1,13 @@
-from typing import Optional, List
+from pydantic import Field, BaseModel
 
-from pydantic import Field, Extra, BaseModel
+
+class LiveRoomInfo(BaseModel):
+    """ 直播间id """
+    room_id: str = "1331407"
 
 
 class Config(BaseModel):
-    room_id_list: List[str] = []
-    login: bool = False
-    cookies: str = ""
-    class Config:
-        extra = Extra.ignore
-        allow_population_by_field_name = True
+    """ 用户cookie可有可无 没有的话就看不见用户信息 """
+    bili_cookie: str = "None"
+    rooms: list[LiveRoomInfo]
+    manual_login: bool = False

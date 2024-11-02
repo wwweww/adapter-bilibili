@@ -1,11 +1,7 @@
-import asyncio
-from typing import (
-    Any,
-    Union,
-)
+from typing import Union, Any
+from typing_extensions import override
 
 from nonebot.adapters import Bot as BaseBot
-from nonebot.typing import overrides
 
 from .event import Event
 from .message import Message, MessageSegment
@@ -13,11 +9,11 @@ from .message import Message, MessageSegment
 
 class Bot(BaseBot):
 
-    @overrides(BaseBot)
+    @override
     async def send(
-            self,
-            event: Event,
-            message: Union[str, Message, MessageSegment],
-            **kwargs,
+        self,
+        event: Event,
+        message: Union[str, Message, MessageSegment],
+        **kwargs,
     ) -> Any:
-        asyncio.create_task(self.adapter.bili.send(message, self.self_id))
+        ...
