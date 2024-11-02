@@ -32,3 +32,4 @@ GET_DANMU_INFO = "https://api.live.bilibili.com/xlive/web-room/v1/index/getDanmu
 
 HEADER_STRUCT = Struct(">I2H2I")
 
+SEND_API = "https://api.live.bilibili.com/msg/send"

@@ -9,5 +9,5 @@ class LiveRoomInfo(BaseModel):
 class Config(BaseModel):
     """ 用户cookie可有可无 没有的话就看不见用户信息 """
     bili_cookie: str = "None"
-    rooms: list[LiveRoomInfo]
+    rooms: list[str]
     manual_login: bool = False

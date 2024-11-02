@@ -2,12 +2,16 @@
 
 [project]
 name = "nonebot-adapter-bilibili"
-version = "0.0.6"
+version = "0.0.7"
 description = "适配哔哩哔哩直播间ws协议的Nonebo2适配器"
 authors = [
     {name = "wwweww", email = "2646787260@qq.com"},
 ]
-dependencies = ["nonebot2>=2.0.0rc2", "qrcode-terminal>=0.8"]
+dependencies = [
+    "nonebot2>=2.0.0rc2", 
+    "qrcode-terminal>=0.8",
+    "brotli>=1.1.0"
+]
 requires-python = ">=3.8"
 readme = "README.md"
 license = {text = "MIT"}
